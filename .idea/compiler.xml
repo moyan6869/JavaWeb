@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="com.sky.api" />
+        <module name="com.sky.builder" />
+        <module name="com.sky.common" />
+        <module name="com.sky.dao" />
+        <module name="com.sky.kafka" />
+        <module name="com.sky.log" />
+        <module name="com.sky.service" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="com.sky" target="1.8" />
+      <module name="com.sky.api" target="1.8" />
+      <module name="com.sky.builder" target="1.8" />
+      <module name="com.sky.common" target="1.8" />
+      <module name="com.sky.dao" target="1.8" />
+      <module name="com.sky.kafka" target="1.8" />
+      <module name="com.sky.log" target="1.8" />
+      <module name="com.sky.service" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

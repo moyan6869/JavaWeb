@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<!-- Log4j的配置文件。配置人：王欣逸     QQ：100992995 -->
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="false">
+	<!-- 控制台输出配置 -->
+	<appender name="console" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%-d{yyyy-MM-dd HH\:mm\:ss} [%c-%L]-[%p] %m%n " />
+		</layout>
+	</appender>
+	<!-- 日志文件配置 -->
+	<appender name="errorLog" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="Threshold" value="error" />
+		<param name="File" value="${anjubao_web.root}/WEB-INF/logs/error.log" />
+		<param name="DatePattern" value=".yyyy-MM-dd-a" />
+		<param name="encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%-d{yyyy-MM-dd HH\:mm\:ss} [%c-%L]-[%p] %m%n " />
+		</layout>
+	</appender>
+	<!-- 日志文件配置 -->
+	<appender name="warnLog" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="Threshold" value="warn" />
+		<param name="File" value="${anjubao_web.root}/WEB-INF/logs/warn.log" />
+		<param name="DatePattern" value=".yyyy-MM-dd-a" />
+		<param name="encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%-d{yyyy-MM-dd HH\:mm\:ss} [%c-%L]-[%p] %m%n " />
+		</layout>
+	</appender>
+	<!-- 日志文件配置 -->
+	<appender name="infoLog" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="Threshold" value="info" />
+		<param name="File" value="${anjubao_web.root}/WEB-INF/logs/info.log" />
+		<param name="DatePattern" value=".yyyy-MM-dd-a" />
+		<param name="encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%-d{yyyy-MM-dd HH\:mm\:ss} [%c-%L]-[%p] %m%n " />
+		</layout>
+	</appender>
+	<!-- 日志文件配置 -->
+	<appender name="debugLog" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="Threshold" value="debug" />
+		<param name="File" value="${anjubao_web.root}/WEB-INF/logs/debug.log" />
+		<param name="DatePattern" value=".yyyy-MM-dd-a" />
+		<param name="encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%-d{yyyy-MM-dd HH\:mm\:ss} [%c-%L]-[%p] %m%n " />
+		</layout>
+	</appender>
+	<!-- 配置了category，则以category的级别为准 -->
+	<category name="com.anjubao">
+		<level value="debug" />
+		<appender-ref ref="console"/>
+	</category>
+	<!-- spring框架日志，可以了解spring框架的加载整个过程 -->
+	<category name="org.springframework">
+		<level value="error" />
+		<appender-ref ref="console"/>
+	</category>
+	<!-- mybatis日志，如果有配置文件解析错误，则会一直在无限循环解析该文件 -->
+	<category name="org.mybatis.spring.SqlSessionFactoryBean">
+		<level value="debug" />
+		<appender-ref ref="console"/>
+	</category>
+	<!-- 总体日志配置 -->
+	<root>
+		<level value="error" />
+		<appender-ref ref="debugLog" />
+		<appender-ref ref="infoLog" />
+		<appender-ref ref="warnLog" />
+		<appender-ref ref="errorLog" />
+	</root>
+</log4j:configuration>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+	<!-- 
+		Log4J采用类似C语言中的printf函数的打印格式格式化日志信息，打印参数如下：
+		%m 输出代码中指定的消息
+		%p 输出优先级，即DEBUG，INFO，WARN，ERROR，FATAL
+　　		%r 输出自应用启动到输出该log信息耗费的毫秒数
+　　		%c 输出所属的类目，通常就是所在类的全名
+　　		%t 输出产生该日志事件的线程名
+　　		%n 输出一个回车换行符，Windows平台为“rn”，Unix平台为“n”
+　　		%d 输出日志时间点的日期或时间，默认格式为ISO8601，也可以在其后指定格式，比如：%d{yyy MMM dd HH:mm:ss,SSS}，输出类似：2002年10月18日 22：10：28，921
+　　		%l 输出日志事件的发生位置，包括类目名、发生的线程，以及在代码中的行数。举例：Testlog4.main(TestLog4.java:10)
+		
+		Log4j提供的layout有以e几种：
+　　		org.apache.log4j.HTMLLayout（以HTML表格形式布局），
+　　		org.apache.log4j.PatternLayout（可以灵活地指定布局模式），
+　　		org.apache.log4j.SimpleLayout（包含日志信息的级别和信息字符串），
+　　		org.apache.log4j.TTCCLayout（包含日志产生的时间、线程、类别等等信息）
+
+		Log4j提供的appender有以下几种：
+　　		org.apache.log4j.ConsoleAppender（控制台），
+　　		org.apache.log4j.FileAppender（文件），
+　　		org.apache.log4j.DailyRollingFileAppender（每天产生一个日志文件），
+　　		org.apache.log4j.RollingFileAppender（文件大小到达指定尺寸的时候产生一个新的文件），
+　　		org.apache.log4j.WriterAppender（将日志信息以流格式发送到任意指定的地方）
+		
+	 -->
+	<!--输出到控制台-->
+	<appender name="LOG.Console" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} [%p] [%C-%M] %m%n"/>
+		</layout>
+	</appender>
+
+	<!--DEBUG信息输出-->
+	<appender name="LOG.DEBUG" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/var/tomcat/skyapi_logs/debug_" />
+		<param name="DatePattern" value="yyyy-MM-dd'.log'" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} [%p] [%C-%M] %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="DEBUG" />
+			<param name="LevelMax" value="DEBUG" />
+		</filter>
+	</appender>
+
+	<!--INFO信息输出-->
+	<appender name="LOG.INFO" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/var/tomcat/skyapi_logs/info_" />
+		<param name="DatePattern" value="yyyy-MM-dd'.log'" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} [%p] [%C-%M] %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="INFO" />
+			<param name="LevelMax" value="INFO" />
+		</filter>
+	</appender>
+
+	<!--WARN信息输出-->
+	<appender name="LOG.WARN" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/var/tomcat/skyapi_logs/warn_" />
+		<param name="DatePattern" value="yyyy-MM-dd'.log'" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} [%p] [%C-%M] %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="WARN" />
+			<param name="LevelMax" value="WARN" />
+		</filter>
+	</appender>
+
+	<!--ERROR信息输出-->
+	<appender name="LOG.ERROR" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/var/tomcat/skyapi_logs/error_" />
+		<param name="DatePattern" value="yyyy-MM-dd'.log'" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} [%p] [%C-%M] %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="ERROR" />
+			<param name="LevelMax" value="ERROR" />
+		</filter>
+	</appender>
+
+	<!--FATAL信息-->
+	<appender name="LOG.FATAL" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="/var/tomcat/skyapi_logs/fatal_" />
+		<param name="DatePattern" value="yyyy-MM-dd'.log'" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} [%p] [%C-%M] %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="FATAL" />
+			<param name="LevelMax" value="FATAL" />
+		</filter>
+	</appender>
+		<!-- 日志输出地 -->
+	<!--
+	<logger name="org.springframework.jdbc.core" additivity="true">
+		<level value="DEBUG" />
+		<appender-ref ref="LOG.DEBUG" />
+	</logger>-->  
+	<logger name="org.springframework.jdbc.core.JdbcTemplate" additivity="true">
+		<level value="DEBUG" />
+		<appender-ref ref="LOG.DEBUG" />
+	</logger> 
+	<!-- 
+	<logger name="java.sql.Statement" additivity="true">
+		<level value="DEBUG" />
+		<appender-ref ref="LOG.DEBUG" />
+	</logger> -->
+	<!-- 根日志输出器root logger -->
+	<logger name="java.sql" additivity="true">
+		<level value="DEBUG" />
+		<appender-ref ref="LOG.DEBUG" />
+	</logger>
+	<!-- 
+	<logger name="java.sql.ResultSet" additivity="true">
+		<level value="DEBUG" />
+		<appender-ref ref="LOG.DEBUG" />
+	</logger>
+	根日志输出器root logger -->
+	<root>
+		<priority value="info" />
+		<appender-ref ref="LOG.Console" />
+		<appender-ref ref="LOG.DEBUG" />
+		<appender-ref ref="LOG.INFO" />
+		<appender-ref ref="LOG.WARN" />
+		<appender-ref ref="LOG.ERROR" />
+		<appender-ref ref="LOG.FATAL" />
+	</root>
+</log4j:configuration>

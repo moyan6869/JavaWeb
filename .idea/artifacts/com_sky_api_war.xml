@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="com.sky.api:war">
+    <output-path>$PROJECT_DIR$/com.sky.api/target</output-path>
+    <root id="archive" name="odoshopapi.war">
+      <element id="artifact" artifact-name="com.sky.api:war exploded" />
+    </root>
+  </artifact>
+</component>

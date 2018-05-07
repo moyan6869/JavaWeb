@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+          http://www.springframework.org/schema/beans classpath:/org/springframework/beans/factory/xml/spring-beans-4.0.xsd
+          http://www.springframework.org/schema/aop classpath:/org/springframework/context/config/spring-aop-4.0.xsd  
+          http://www.springframework.org/schema/tx classpath:/org/springframework/context/config/spring-tx-4.0.xsd  
+          http://www.springframework.org/schema/context classpath:/org/springframework/context/config/spring-context-4.0.xsd  ">
+    <!-- 最新 测试服务器配置-->
+     <import resource="classpath:META-INF/conf/test_conf.xml"/>
+    <!-- 旧的  测试服务器配置
+    <import resource="classpath:META-INF/conf/test_1_conf.xml"/> -->
+    <!-- 开发环境配置
+    <import resource="classpath:META-INF/conf/dev_conf.xml"/> -->
+    <!-- 正式环境配置
+    <import resource="classpath:META-INF/conf/conf.xml"/> -->
+    <!-- 数据源 -->
+    <!-- 数据源 -->
+    <bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource" destroy-method="close">
+		<!-- 数据库驱动 -->
+		<property name="driverClass" value="${jdbc.driverClassName}" />
+		<!-- 相应驱动的jdbcUrl-->
+		<property name="jdbcUrl" value="${jdbc.url}" />
+		<!-- 数据库用户名 -->
+		<property name="username" value="${jdbc.username}" />
+		<!-- 数据库密码 -->
+		<property name="password" value="${jdbc.password}" />
+		<!-- 检查数据库连接池中空闲连接的间隔时间，单位是分，默认值：240，如果要取消则设置为0 -->
+		<property name="idleConnectionTestPeriod"
+			value="${BoneCP.idleConnectionTestPeriod}" />
+		<!-- 连接池中未使用的连接最大存活时间，单位是分，默认值：60，如果要永远存活设置为0 -->
+		<property name="idleMaxAge" value="${BoneCP.idleMaxAge}" />
+		<!-- 每个分区最大的连接数 -->
+		<property name="maxConnectionsPerPartition"
+			value="${BoneCP.maxConnectionsPerPartition}" />
+		<!-- 每个分区最小的连接数 -->
+		<property name="minConnectionsPerPartition"
+			value="${BoneCP.minConnectionsPerPartition}" />
+		<!-- 分区数 ，默认值2，最小1，推荐3-4，视应用而定 -->
+		<property name="partitionCount"
+			value="${BoneCP.partitionCount}" />
+		<!-- 每次去拿数据库连接的时候一次性要拿几个,默认值：2 -->
+		<property name="acquireIncrement"
+			value="${BoneCP.acquireIncrement}" />
+		<!-- 缓存prepared statements的大小，默认值：0 -->
+		<property name="statementsCacheSize"
+			value="${BoneCP.statementsCacheSize}" />
+		<!-- 每个分区释放链接助理进程的数量，默认值：3，除非你的一个数据库连接的时间内做了很多工作，不然过多的助理进程会影响你的性能 -->
+		<property name="releaseHelperThreads"
+			value="${BoneCP.releaseHelperThreads}" />
+	</bean>
+
+    <!-- 数据库操作类bean -->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	
+    <!-- 属性文件位置 -->
+    <import resource="classpath:META-INF/conf/spring-config-jdbc-cluster.xml"/>
+</beans>

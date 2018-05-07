@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/com.sky.iml" filepath="$PROJECT_DIR$/com.sky.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.sky.api/com.sky.api.iml" filepath="$PROJECT_DIR$/com.sky.api/com.sky.api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.sky.builder/com.sky.builder.iml" filepath="$PROJECT_DIR$/com.sky.builder/com.sky.builder.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.sky.common/com.sky.common.iml" filepath="$PROJECT_DIR$/com.sky.common/com.sky.common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.sky.dao/com.sky.dao.iml" filepath="$PROJECT_DIR$/com.sky.dao/com.sky.dao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.sky.kafka/com.sky.kafka.iml" filepath="$PROJECT_DIR$/com.sky.kafka/com.sky.kafka.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.sky.log/com.sky.log.iml" filepath="$PROJECT_DIR$/com.sky.log/com.sky.log.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.sky.service/com.sky.service.iml" filepath="$PROJECT_DIR$/com.sky.service/com.sky.service.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/com.sky.builder" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/com.sky.common" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/com.sky.dao" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/com.sky.kafka" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/com.sky.log" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/com.sky.service" charset="UTF-8" />
+  </component>
+</project>

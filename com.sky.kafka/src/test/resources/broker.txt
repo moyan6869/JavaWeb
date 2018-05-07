@@ -1,0 +1,386 @@
+broker.id  默认值：无
+ 
+每一个broker都有一个唯一的id，这是一个非负整数，这个id就是broker的"名字"，这样就允许broker迁移到别的机器而不会影响消费者。你可以选择任意一个数字，只要它是唯一的。
+ 
+ 
+ 
+log.dirs 默认值：/tmp/kafka-logs
+ 
+一个用逗号分隔的目录列表，可以有多个，用来为Kafka存储数据。每当需要为一个新的partition分配一个目录时，会选择当前的存储partition最少的目录来存储。
+ 
+ 
+ 
+port 默认值：6667
+ 
+server用来接受client请求的端口。
+ 
+ 
+ 
+zookeeper.connect 默认值：null
+ 
+指定了ZooKeeper的connect string，以hostname:port的形式，hostname和port就是ZooKeeper集群各个节点的hostname和port。ZooKeeper集群中的某个节点可能会挂掉，所以可以指定多个节点的connect string。如下所式：
+ 
+hostname1:port1,hostname2:port2,hostname3:port3. 
+
+ 
+ 
+ZooKeeper也可以允许你指定一个"chroot"的路径，可以让Kafka集群将需要存储在ZooKeeper的数据存储到指定的路径下这可以让多个Kafka集群或其他应用程序公用同一个ZooKeeper集群。可以使用如下的connect string：
+ 
+hostname1:port1,hostname2:port2,hostname3:port3/chroot/path 
+
+这样就可以讲这个集群的所有数据存放在/chroot/path路径下。注意在启动集群前，一定要先自己创建这个路径，consumer也得使用相同的connect string。
+ 
+ 
+ 
+message.max.bytes 默认值：1000000
+ 
+server能接收的一条消息的最大的大小。这个属性跟consumer使用的最大fetch大小是一致的，这很重要，否则一个不守规矩的producer会发送一个太大的消息。
+ 
+ 
+ 
+num.network.threads 默认值：3
+ 
+处理网络的线程的数量，server端用来处理网络请求，一般不需要改变它。
+ 
+ 
+ 
+num.io.threads 默认值：8
+ 
+server端处理请求时的I/O线程的数量，不要小于磁盘的数量。
+ 
+ 
+ 
+background.threads 默认值：4
+ 
+用来处理各种不同的后台任务的线程数量，比如删除文件，一般不需要改变它。
+ 
+ 
+ 
+queued.max.requests 默认值：500
+ 
+I/O线程等待队列中的最大的请求数，超过这个数量，network线程就不会再接收一个新的请求。
+ 
+ 
+ 
+host.name 默认值：null
+ 
+broker的hostname，如果设置了它，会仅绑定这个地址。如果没有设置，则会绑定所有的网络接口，并提交一个给ZK。
+ 
+ 
+ 
+advertised.host.name 默认值：null
+ 
+如果设置了这个hostname，会分发给所有的producer，consumer和其他broker来连接自己。
+ 
+ 
+ 
+advertised.port 默认值：null
+ 
+分发这个端口给所有的producer，consumer和其他broker来建立连接。如果此端口跟server绑定的端口不同，则才有必要设置。
+ 
+ 
+ 
+socket.send.buffer.bytes 默认值：100 * 1024
+ 
+server端用来处理socket连接的SO_SNDBUFF缓冲大小。
+ 
+ 
+ 
+socket.receive.buffer.bytes 默认值：100 * 1024
+ 
+server端用来处理socket连接的SO_RCVBUFF缓冲大小。
+ 
+ 
+ 
+socket.request.max.bytes 默认值：100 * 1024 * 1024
+ 
+server能接受的请求的最大的大小，这是为了防止server跑光内存，不能大于Java堆的大小。
+ 
+ 
+ 
+num.partitions 默认值：1
+ 
+如果在创建topic的时候没有指定partition的数量，则使用这个值来设置。
+ 
+ 
+ 
+log.segment.bytes 默认值：1024 * 1024 * 1024
+ 
+一个topic的一个partition对应的所有segment文件称为log。这个设置控制着一个segment文件的最大的大小，如果超过了此大小，就会生成一个新的segment文件。此配置可以被覆盖，参考the per-topic configuration section。
+ 
+ 
+ 
+log.roll.hours 默认值：24 * 7
+ 
+这个设置会强制Kafka去roll一个新的log segment文件，即使当前使用的segment文件的大小还没有超过log.segment.bytes。此配置可以被覆盖，参考the per-topic configuration section。
+ 
+ 
+ 
+log.cleanup.policy 默认值：delete
+ 
+此配置可以设置成delete或compact。如果设置为delete，当log segment文件的大小达到上限，或者roll时间达到上限，文件将会被删除。如果设置成compact，则此文件会被清理，标记成已过时状态，详见log compaction。此配置可以被覆盖，参考the per-topic configuration section。
+ 
+ 
+ 
+log.retention.minutes 默认值：7 days
+ 
+在删除log文件之前，保存在磁盘的时间，单位为分钟，这是所有topic的默认值。注意如果同时设置了log.retention.minutes和log.retention.bytes，如果达到任意一个条件的限制，都会马上删掉。此配置可以被覆盖，参考the per-topic configuration section。
+ 
+ 
+ 
+log.retention.bytes 默认值：-1
+ 
+topic每个分区的最大文件大小，一个topic的大小限制 = 分区数 * log.retention.bytes。-1没有大小限log.retention.bytes和log.retention.minutes任意一个达到要求，都会执行删除。此配置可以被覆盖，参考the per-topic configuration section。
+ 
+ 
+ 
+log.retention.check.interval.ms 默认值：5 minutes
+ 
+检查任意一个log segment文件是否需要进行retention处理的时间间隔。
+ 
+ 
+ 
+log.cleaner.enable 默认值：false
+ 
+设置为true就开启了log compaction功能。
+ 
+ 
+ 
+log.cleaner.threads 默认值：1
+ 
+使用log compaction功能来清理log的线程的数量。
+ 
+ 
+ 
+log.cleaner.io.max.bytes.per.second 默认值：None
+ 
+在执行log compaction的过程中，限制了cleaner每秒钟I/O的数据量，以免cleaner影响正在执行的请求。
+ 
+ 
+ 
+log.cleaner.dedupe.buffer.size 默认值：500 * 1024 * 1024
+ 
+日志压缩去重时候的缓存空间，在空间允许的情况下，越大越好。
+ 
+ 
+ 
+log.cleaner.io.buffer.size 默认值：512 * 1024
+ 
+日志清理时候用到的I/O块(chunk)大小，一般不需要修改。
+ 
+ 
+ 
+log.cleaner.io.buffer.load.factor 默认值：0.9
+ 
+日志清理中hash表的扩大因子，一般不需要修改。
+ 
+ 
+ 
+log.cleaner.backoff.ms 默认值：15000
+ 
+检查log是否需要clean的时间间隔。
+ 
+ 
+ 
+log.cleaner.min.cleanable.ratio 默认值：0.5
+ 
+控制了log compactor进行clean操作的频率。默认情况下，当log的50%以上已被clean时，就不用继续clean了。此配置可以被覆盖，参考the per-topic configuration section。
+ 
+ 
+ 
+log.cleaner.delete.retention.ms 默认值：1 day
+ 
+对于压缩的日志保留的最长时间，也是客户端消费消息的最长时间，同log.retention.minutes的区别在于一个控制未压缩数据，一个控制压缩后的数据，参考the per-topic configuration section。
+ 
+ 
+ 
+log.index.size.max.bytes 默认值：10 * 1024 * 1024
+ 
+每一个log segment文件的offset index文件的最大的size。注意总是预分配一个稀疏(sparse)文件，当roll这个文件时再shrink down。如果index文件被写满，那么就roll一个新的log segment文件，即使还没达到log.segment.byte限制。参考the per-topic configuration section。
+ 
+ 
+ 
+log.index.interval.bytes 默认值：4096
+ 
+当执行一个fetch操作后，需要一定的空间来扫描最近的offset大小，设置越大，代表扫描速度越快，但是也更耗内存，一般情况下不需要改变这个参数。
+ 
+ 
+ 
+log.flush.interval.messages 默认值：None
+ 
+在强制fsync一个partition的log文件之前暂存的消息数量。调低这个值会更频繁的sync数据到磁盘，影响性能。通常建议人家使用replication来确保持久性，而不是依靠单机上的fsync，但是这可以带来更多的可靠性。
+ 
+ 
+ 
+log.flush.scheduler.interval.ms 默认值：3000
+ 
+log flusher检查是否需要把log刷到磁盘的时间间隔，单位为ms。
+ 
+ 
+ 
+log.flush.interval.ms 默认值：None
+ 
+2次fsync调用之间最大的时间间隔，单位为ms。即使log.flush.interval.messages没有达到，只要这个时间到了也需要调用fsync。
+ 
+ 
+ 
+log.delete.delay.ms 默认值：60000
+ 
+在log文件被移出索引后，log文件的保留时间。在这段时间内运行的任意正在进行的读操作完成操作，不用去打断它。通常不需要改变。
+ 
+ 
+ 
+log.flush.offset.checkpoint.interval.ms 默认值：60000
+ 
+记录上次把log刷到磁盘的时间点的频率，用来日后的recovery。通常不需要改变。
+
+ 
+ 
+ 
+auto.create.topics.enable 默认值：true
+ 
+是否允许自动创建topic。如果设为true，那么produce，consume或者fetch metadata一个不存在的topic时，就会自动创建一个默认replication factor和partition number的topic。
+ 
+ 
+ 
+controller.socket.timeout.ms 默认值：30000
+ 
+partition管理控制器发向replica的命令的socket超时时间。
+ 
+ 
+ 
+controller.message.queue.size 默认值：10
+ 
+partition leader与replicas数据同步时的消息的队列大小。
+ 
+ 
+ 
+default.replication.factor 默认值：1
+ 
+自动创建topic时的默认replication factor的个数。
+ 
+ 
+ 
+replica.lag.time.max.ms 默认值：10000
+ 
+如果一个follower在有一个时间窗口内没有发送任意fetch请求，leader就会把这个follower从ISR(in-sync replicas)移除，并认为它已挂掉。
+ 
+ 
+ 
+replica.lag.max.messages 默认值：4000
+ 
+如果一个replica落后leader此配置指定的消息条数，leader就会把它移除ISR，并认为它挂掉。
+ 
+ 
+ 
+replica.socket.timeout.ms 默认值：300 * 1000
+ 
+复制数据过程中，replica发送给leader的网络请求的socket超时时间。
+ 
+ 
+ 
+replica.socket.receive.buffer.bytes 默认值：64 * 1024
+ 
+复制数据过程中，replica发送网络请求给leader的socket receiver buffer的大小。
+ 
+ 
+ 
+replica.fetch.max.bytes 默认值：1024 * 1024
+ 
+复制数据过程中，replica发送给leader的fetch请求试图获取数据的最大的字节数。
+ 
+ 
+ 
+replica.fetch.wait.max.ms 默认值：500
+ 
+复制数据过程中，为了fetch数据，replica发送请求给leader的最大的等待时间。
+ 
+ 
+ 
+replica.fetch.min.bytes 默认值：1
+ 
+复制数据过程中，replica收到的每个fetch响应，期望的最小的字节数，如果没有收到足够的字节数，就会等待期望更多的数据，直到达到replica.fetch.wait.max.ms。
+ 
+ 
+ 
+num.replica.fetchers 默认值：1
+ 
+用来从leader复制消息的线程数量，增大这个值可以增加follow的I/O并行度。
+ 
+ 
+ 
+replica.high.watermark.checkpoint.interval.ms 默认值：5000
+ 
+每一个replica存储自己的high watermark到磁盘的频率，用来日后的recovery。
+ 
+ 
+ 
+fetch.purgatory.purge.interval.requests 默认值：10000
+ 
+含义暂不明，日后研究。The purge interval (in number of requests) of the fetch request purgatory.
+ 
+ 
+ 
+producer.purgatory.purge.interval.requests 默认值：10000
+ 
+含义暂不明，日后研究。The purge interval (in number of requests) of the producer request purgatory.
+ 
+ 
+ 
+zookeeper.session.timeout.ms 默认值：6000
+ 
+ZooKeeper的session的超时时间，如果在这段时间内没有收到ZK的心跳，则会被认为该Kafka server挂掉了。如果把这个值设置得过低可能被误认为挂掉，如果设置得过高，如果真的挂了，则需要很长时间才能被server得知。
+ 
+ 
+ 
+zookeeper.connection.timeout.ms 默认值：6000
+ 
+client连接到ZK server的超时时间。
+ 
+ 
+ 
+zookeeper.sync.time.ms 默认值：2000
+ 
+一个ZK follower能落后leader多久。
+ 
+ 
+ 
+controlled.shutdown.enable 默认值：false
+ 
+如果为true，在关闭一个broker前，会把当前broker上的所有partition，如果有为leader的话，会把leader权交给其他broker上的相应的partition。这会降低在关闭期间不可用的时间窗口。
+ 
+ 
+ 
+controlled.shutdown.max.retries 默认值：3
+ 
+在执行一个unclean(强行关闭？)的关闭操作前，为了成功完成关闭操作，最大的重试次数。
+ 
+ 
+ 
+controlled.shutdown.retry.backoff.ms 默认值：5000
+ 
+在关闭重试期间的回退(backoff)时间。
+ 
+ 
+ 
+auto.leader.rebalance.enable 默认值：false
+ 
+如果设为true，复制控制器会周期性的自动尝试，为所有的broker的每个partition平衡leadership，为更优先(preferred)的replica分配leadership。
+ 
+ 
+ 
+leader.imbalance.per.broker.percentage 默认值：10
+ 
+每个broker允许的不平衡的leader的百分比。如果每个broker超过了这个百分比，复制控制器会重新平衡leadership。
+ 
+ 
+ 
+leader.imbalance.check.interval.seconds 默认值：300
+ 
+检测leader不平衡的时间间隔。
+ 
+ 
+ 
+offset.metadata.max.bytes 默认值：1024
+ 
+允许client(消费者)保存它们元数据(offset)的最大的数据量。

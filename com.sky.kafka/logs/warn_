@@ -1,0 +1,9 @@
+2016-01-14 10:33:01 [WARN] [kafka.utils.Logging$class-warn] Error while fetching metadata [{TopicMetadata for topic test_3 -> 
+No partition metadata for topic test_3 due to kafka.common.LeaderNotAvailableException}] for topic [test_3]: class kafka.common.LeaderNotAvailableException 
+2016-01-14 10:33:01 [WARN] [kafka.utils.Logging$class-warn] Error while fetching metadata [{TopicMetadata for topic test_3 -> 
+No partition metadata for topic test_3 due to kafka.common.LeaderNotAvailableException}] for topic [test_3]: class kafka.common.LeaderNotAvailableException 
+2016-01-14 10:33:01 [WARN] [kafka.utils.Logging$class-warn] Error while fetching metadata [{TopicMetadata for topic test_3 -> 
+No partition metadata for topic test_3 due to kafka.common.LeaderNotAvailableException}] for topic [test_3]: class kafka.common.LeaderNotAvailableException 
+2016-01-14 10:33:01 [WARN] [kafka.utils.Logging$class-warn] Error while fetching metadata [{TopicMetadata for topic test_3 -> 
+No partition metadata for topic test_3 due to kafka.common.LeaderNotAvailableException}] for topic [test_3]: class kafka.common.LeaderNotAvailableException 
+2016-01-14 10:44:11 [WARN] [kafka.utils.Logging$class-warn] Property serializer.class is not valid
